@@ -1,3 +1,69 @@
+You will find the English ReadMe at the end of the document.
+
+# HuskyLens
+
+[HuskyLens ist ein einfach zu bedienender KI-Vision-Sensor mit sechs integrierten Funktionen: Gesichtserkennung, Objektverfolgung, Objekterkennung, Linienverfolgung, Farberkennung und Etiketten- (QR-Code-) Erkennung.](https://www.dfrobot.com.cn/goods-2050.html)
+
+## Grundlegende Verwendung
+
+* HuskyLens I2C initialisieren und Modus auswählen.
+
+```
+blocks
+    huskylens.initI2c()
+    huskylens.initMode(protocolAlgorithm.ALGORITHM_FACE_RECOGNITION)
+
+```
+
+* HuskyLens fordert die Daten an und speichert die angeforderten Daten im Ergebnis zur späteren Verwendung.
+
+```
+blocks
+ basic.forever(function () {
+        huskylens.request()
+    })
+```
+
+* HuskyLens ruft das gewünschte Ergebnis aus den gespeicherten Daten ab (zum Beispiel: X-Zentrum der Box mit ID 1).
+
+```
+blocks
+huskylens.initI2c()
+    huskylens.initMode(protocolAlgorithm.ALGORITHM_FACE_RECOGNITION)
+    basic.forever(function () {
+        huskylens.request()
+        if (huskylens.isLearned(1)) {
+            if (huskylens.isAppear(1, HUSKYLENSResultType_t.HUSKYLENSResultBlock)) {
+                serial.writeValue("box", huskylens.readeBox(1, Content1.xCenter))
+            }
+        }
+    })
+```
+
+* HuskyLens ruft die Parameter der mittleren Box auf dem Bildschirm aus den Ergebnissen ab.
+
+```
+blocks
+ huskylens.initI2c()
+    huskylens.initMode(protocolAlgorithm.ALGORITHM_FACE_RECOGNITION)
+    basic.forever(function () {
+        huskylens.request()
+        serial.writeValue("box", huskylens.readBox_s(Content3.ID))
+    })
+```
+
+* HuskyLens ruft die Parameter der N-ten Box aus dem Ergebnis ab.
+
+```
+blocks
+huskylens.initI2c()
+    huskylens.initMode(protocolAlgorithm.ALGORITHM_FACE_RECOGNITION)
+    basic.forever(function () {
+        huskylens.request()
+        serial.writeValue("box", huskylens.readBox_ss(1, Content3.ID))
+    })
+```
+
 
 # HuskyLens
 
@@ -7,7 +73,8 @@
 
 * HuskyLens Init I2C and select pattern.
 
-```blocks
+```
+blocks
 
     huskylens.initI2c()
     huskylens.initMode(protocolAlgorithm.ALGORITHM_FACE_RECOGNITION)
@@ -16,7 +83,8 @@
 
 * HuskyLens requests the data and stores the requested data in the result for later use.
 
-```blocks
+```
+blocks
 
     basic.forever(function () {
         huskylens.request()
@@ -26,7 +94,8 @@
 
 * HuskyLens retrieves the desired result from the result (For example, get the X center of the ID1 box).
 
-```blocks
+```
+blocks
 
     huskylens.initI2c()
     huskylens.initMode(protocolAlgorithm.ALGORITHM_FACE_RECOGNITION)
@@ -43,7 +112,8 @@
 
 * HuskyLens retrieves the parameters of the center box on the screen from the result.
 
-```blocks
+```
+blocks
 
     huskylens.initI2c()
     huskylens.initMode(protocolAlgorithm.ALGORITHM_FACE_RECOGNITION)
@@ -56,7 +126,8 @@
 
 * HuskyLens gets the parameters of the Nth box from the result.
 
-```blocks
+```
+blocks
     huskylens.initI2c()
     huskylens.initMode(protocolAlgorithm.ALGORITHM_FACE_RECOGNITION)
     basic.forever(function () {
